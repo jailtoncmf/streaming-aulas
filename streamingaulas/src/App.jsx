@@ -141,9 +141,11 @@ export default function App() {
   return (
     <>
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700;800&display=swap');
+
         body {
           margin: 0;
-          font-family: Inter, system-ui;
+          font-family: 'Inter', system-ui;
           color: white;
           background:
             radial-gradient(circle at 70% 30%, #1c1cff55, transparent 45%),
@@ -185,15 +187,13 @@ export default function App() {
           transition: transform 0.3s ease;
         }
 
-        .logo:hover {
-          transform: scale(1.05);
-        }
+        .logo:hover { transform: scale(1.05); }
 
         .tagline {
           font-family: 'Inter', sans-serif;
           font-size: 1.2rem;
           font-weight: 500;
-          color: rgba(255, 255, 255, 0.8);
+          color: rgba(255,255,255,0.8);
           letter-spacing: 0.5px;
           max-width: 600px;
         }
@@ -232,10 +232,6 @@ export default function App() {
           inset: 0;
           opacity: 0;
           transition: opacity 0.4s ease;
-        }
-
-        .card:hover video {
-          opacity: 1;
         }
 
         .overlay {
@@ -298,6 +294,18 @@ export default function App() {
               className="card"
               onMouseMove={handleTilt}
               onMouseLeave={resetTilt}
+              onMouseEnter={(e) => {
+                const video = e.currentTarget.querySelector("video");
+                video.currentTime = 0;
+                video.style.opacity = 1;
+                video.play();
+              }}
+              onMouseLeaveCapture={(e) => {
+                const video = e.currentTarget.querySelector("video");
+                video.pause();
+                video.currentTime = 0;
+                video.style.opacity = 0;
+              }}
               onClick={() => setVideoAtivo(aula.video)}
             >
               <div className="media">
@@ -306,11 +314,7 @@ export default function App() {
                   src={aula.video}
                   muted
                   loop
-                  onMouseEnter={(e) => e.target.play()}
-                  onMouseLeave={(e) => {
-                    e.target.pause();
-                    e.target.currentTime = 0;
-                  }}
+                  style={{ opacity: 0, transition: "opacity 0.4s ease" }}
                 />
                 <div className="overlay" />
               </div>
