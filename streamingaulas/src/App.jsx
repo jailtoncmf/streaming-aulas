@@ -29,7 +29,6 @@ export default function App() {
     },
   ];
 
-  /* ================= MOLECULAR BACKGROUND ================= */
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -107,7 +106,6 @@ export default function App() {
     return () => window.removeEventListener("resize", resize);
   }, []);
 
-  /* ================= TILT 3D ================= */
   const handleTilt = (e) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
